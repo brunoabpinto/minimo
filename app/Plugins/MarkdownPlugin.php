@@ -14,13 +14,13 @@ class MarkdownPlugin implements PluginInterface
         }
 
         $route = trim((string) ($context['route'] ?? ''), '/');
-        $pageKey = $this->routeToPageKey($route);
-        if ($pageKey === null) {
+        $pageKeys = $this->routeToPageKeys($route);
+        if ($pageKeys === null) {
             return null;
         }
 
-        $md = __DIR__ . '/../../views/pages/' . $pageKey . '.md';
-        if (!file_exists($md)) {
+        $md = $this->resolvePagePath($pageKeys, '.md');
+        if ($md === null) {
             return null;
         }
 
@@ -56,7 +56,7 @@ class MarkdownPlugin implements PluginInterface
         }
     }
 
-    private function routeToPageKey(string $route): ?string
+    private function routeToPageKeys(string $route): ?array
     {
         if ($route === '' || str_contains($route, '..')) {
             return null;
@@ -66,6 +66,26 @@ class MarkdownPlugin implements PluginInterface
             return null;
         }
 
-        return str_replace('/', '-', $route);
+        $keys = [$route];
+        $flatRoute = str_replace('/', '-', $route);
+        if ($flatRoute !== $route) {
+            $keys[] = $flatRoute;
+        }
+
+        return $keys;
+    }
+
+    private function resolvePagePath(array $pageKeys, string $extension): ?string
+    {
+        $pagesPath = __DIR__ . '/../../views/pages';
+
+        foreach ($pageKeys as $pageKey) {
+            $candidate = $pagesPath . '/' . $pageKey . $extension;
+            if (is_file($candidate)) {
+                return $candidate;
+            }
+        }
+
+        return null;
     }
 }

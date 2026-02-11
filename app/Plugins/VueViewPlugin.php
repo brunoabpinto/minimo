@@ -15,13 +15,14 @@ class VueViewPlugin implements PluginInterface
         }
 
         $route = trim((string) ($context['route'] ?? ''), '/');
-        $pageKey = $this->routeToPageKey($route);
-        if ($pageKey === null) {
+        $pageKeys = $this->routeToPageKeys($route);
+        if ($pageKeys === null) {
             return null;
         }
 
-        $viewPath = __DIR__ . '/../../views/pages/' . $pageKey . '.vue';
-        if (!file_exists($viewPath)) {
+        $pageKey = $pageKeys[0];
+        $viewPath = $this->resolvePagePath($pageKeys, '.vue');
+        if ($viewPath === null) {
             return null;
         }
 
@@ -55,7 +56,7 @@ class VueViewPlugin implements PluginInterface
         ]);
     }
 
-    private function routeToPageKey(string $route): ?string
+    private function routeToPageKeys(string $route): ?array
     {
         if ($route === '' || str_contains($route, '..')) {
             return null;
@@ -65,7 +66,27 @@ class VueViewPlugin implements PluginInterface
             return null;
         }
 
-        return str_replace('/', '-', $route);
+        $keys = [$route];
+        $flatRoute = str_replace('/', '-', $route);
+        if ($flatRoute !== $route) {
+            $keys[] = $flatRoute;
+        }
+
+        return $keys;
+    }
+
+    private function resolvePagePath(array $pageKeys, string $extension): ?string
+    {
+        $pagesPath = __DIR__ . '/../../views/pages';
+
+        foreach ($pageKeys as $pageKey) {
+            $candidate = $pagesPath . '/' . $pageKey . $extension;
+            if (is_file($candidate)) {
+                return $candidate;
+            }
+        }
+
+        return null;
     }
 
     private function extractFirstBlock(string $source, string $tag): ?string
