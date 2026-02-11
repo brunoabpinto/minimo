@@ -23,3 +23,7 @@ Thumbs.db
 # PHP / Composer caches
 .phpunit.result.cache
 composer.phar
+
+# Wasmer deploy
+/wasmer.toml
+/app.yaml
