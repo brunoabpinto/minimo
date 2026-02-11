@@ -37,16 +37,24 @@ class BladeViewPlugin implements PluginInterface
     private function renderRoute(array $context): ?string
     {
         $route = trim((string) ($context['route'] ?? ''), '/');
-        $pageKey = $this->routeToPageKey($route);
+        $pageKeys = $this->routeToPageKeys($route);
 
-        if ($pageKey === null) {
+        if ($pageKeys === null) {
             return null;
         }
 
-        return $this->renderNamedView('pages.' . $pageKey, []);
+        foreach ($pageKeys as $pageKey) {
+            $viewName = 'pages.' . str_replace('/', '.', $pageKey);
+            $rendered = $this->renderNamedView($viewName, []);
+            if ($rendered !== null) {
+                return $rendered;
+            }
+        }
+
+        return null;
     }
 
-    private function routeToPageKey(string $route): ?string
+    private function routeToPageKeys(string $route): ?array
     {
         if ($route === '' || str_contains($route, '..')) {
             return null;
@@ -56,7 +64,13 @@ class BladeViewPlugin implements PluginInterface
             return null;
         }
 
-        return str_replace('/', '-', $route);
+        $keys = [$route];
+        $flatRoute = str_replace('/', '-', $route);
+        if ($flatRoute !== $route) {
+            $keys[] = $flatRoute;
+        }
+
+        return $keys;
     }
 
     private function renderNamedView(string $viewName, array $data): ?string
