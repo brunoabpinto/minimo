@@ -1,0 +1,25 @@
+# Dependencies
+/vendor/
+
+# Runtime/cache artifacts
+/storage/cache/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local tooling and editor files
+.idea/
+.vscode/
+.claude/settings.local.json
+
+# OS / temp
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# PHP / Composer caches
+.phpunit.result.cache
+composer.phar
