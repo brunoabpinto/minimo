@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimo</title>
+    <title>@yield('title', 'Minimo')</title>
+    @yield('head')
     <link rel="stylesheet" href="/styles/app.css?v=20260211b" />
 </head>
 

@@ -19,6 +19,23 @@ function plugin_manager(): PluginManager
     return $manager;
 }
 
+function app_config(?string $key = null, $default = null)
+{
+    static $config = null;
+
+    if ($config === null) {
+        $configPath = __DIR__ . '/config.php';
+        $loaded = is_file($configPath) ? require $configPath : [];
+        $config = is_array($loaded) ? $loaded : [];
+    }
+
+    if ($key === null) {
+        return $config;
+    }
+
+    return $config[$key] ?? $default;
+}
+
 function render_with_plugins(array $context): ?string
 {
     return plugin_manager()->handle($context);
