@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# If request is already /public, do nothing
+RewriteRule ^public(/.*)?$ - [L]
+
+# Send all requests to /public
+RewriteRule ^(.*)$ public/$1 [L]

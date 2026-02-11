@@ -1,5 +1,7 @@
 # Minimo
 
+Live preview/docs: [minimo.infinityfree.me](https://minimo.infinityfree.me/)
+
 Minimo is a lightweight PHP framework with:
 - convention-based controller routing
 - plugin-driven route rendering
@@ -7,7 +9,7 @@ Minimo is a lightweight PHP framework with:
 
 ## Requirements
 
-- PHP 8.2+
+- PHP 8.3+
 - Composer
 
 ## Install

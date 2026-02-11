@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# If real file/folder exists, serve it directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Otherwise route to index.php
+RewriteRule ^ index.php [L,QSA]
