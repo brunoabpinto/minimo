@@ -5,6 +5,7 @@ namespace App\Repositories;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
+use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use League\CommonMark\MarkdownConverter;
 
 class BlogRepository
@@ -24,7 +25,13 @@ class BlogRepository
         $mdFiles = glob('../views/pages/blog/*.md');
         $posts = [];
         foreach ($mdFiles as $mdFile) {
-            $post = $this->converter->convert(file_get_contents($mdFile))->getFrontMatter();
+            $converted = $this->converter->convert(file_get_contents($mdFile));
+            $post = [];
+
+            if ($converted instanceof RenderedContentWithFrontMatter) {
+                $post = is_array($converted->getFrontMatter()) ? $converted->getFrontMatter() : [];
+            }
+
             $post['url'] = '/blog/' . pathinfo($mdFile, PATHINFO_FILENAME);
             $posts[] = $post;
         }

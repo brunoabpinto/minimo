@@ -5,6 +5,7 @@ namespace App\View;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
+use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use League\CommonMark\MarkdownConverter;
 
 class MarkdownRenderer
@@ -24,8 +25,12 @@ class MarkdownRenderer
         $source = file_get_contents($path);
 
         $converted = $this->converter->convert($source);
-        $frontMatter = $converted->getFrontMatter();
         $content = $converted->getContent();
+        $frontMatter = [];
+
+        if ($converted instanceof RenderedContentWithFrontMatter) {
+            $frontMatter = is_array($converted->getFrontMatter()) ? $converted->getFrontMatter() : [];
+        }
 
         $rendered = render(
             'layouts.markdown',
