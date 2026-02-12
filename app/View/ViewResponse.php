@@ -33,6 +33,7 @@ final class ViewResponse
                 return $this->markdown($file);
             }
         }
+        return null;
     }
 
     public function blade(): string

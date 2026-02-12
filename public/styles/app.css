@@ -275,19 +275,28 @@ li p {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.12em;
   transition: color linear 0.15s;
 }
 
 a:hover {
-  text-decoration: none;
+  text-decoration-thickness: 0.12em;
 }
 
 p a {
+  text-decoration: none;
   box-shadow: inset 0 -0.12em 0 var(--primary-color);
   transition:
   box-shadow 0.2s ease-in-out,
   color 0.2s ease-in-out;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 p a:hover {
@@ -382,6 +391,7 @@ header {
 a.logo {
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
 }
 
 a.logo:hover {
@@ -410,6 +420,7 @@ header nav a {
   min-width: 70px;
   padding: 5px;
   text-align: center;
+  text-decoration: none;
 }
 
 header nav a::before {
@@ -430,6 +441,11 @@ header nav a.selected::before {
 }
 
 header nav a.selected::before {
+  background: var(--primary-color);
+}
+
+header nav a:focus-visible::before {
+  transform: scaleX(1);
   background: var(--primary-color);
 }
 
@@ -535,6 +551,7 @@ footer * {
   line-height: 1;
   text-transform: uppercase;
   opacity: 0.45;
+  text-decoration: none;
   transition:
   opacity 0.2s ease,
   color 0.2s ease;
@@ -616,9 +633,6 @@ footer * {
   margin-right: 16px;
 }
 
-hr {
-  margin: 60px auto;
-}
 .post-item img {
   height: 380px;
   object-fit: cover;
@@ -644,4 +658,12 @@ hr {
 .post-header hr {
   min-width: 100px;
   width: 30%;
+}
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  text-align: center;
 }
