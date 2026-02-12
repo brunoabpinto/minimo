@@ -28,7 +28,7 @@ class MarkdownRenderer
         $content = $converted->getContent();
 
         $rendered = render(
-            'markdown.layout',
+            'layouts.markdown',
             [
                 'content' => $content,
                 'frontMatter' => $frontMatter,
