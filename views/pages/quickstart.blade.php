@@ -39,32 +39,40 @@ cd minimo</code></pre>
         <p>Open <code>/hello</code>.</p>
 
         <h2>5. Use your existing controller</h2>
-        <p>In your existing <code>HelloController</code>, read posted data in <code>create()</code> and pass it back to the view:</p>
-        <pre><code>public function create($request): void
-{
-    $name = trim((string) ($request['name'] ?? ''));
+        <p>In your existing <code>HelloController</code>, read posted data in <code>create()</code> and return it as view data:</p>
+        <pre><code>&lt;?php
 
-    view()-&gt;share([
-        'name' =&gt; $name,
-    ]);
+namespace App\Controllers;
+
+class HelloController
+{
+    public function create($request): array
+    {
+        $name = trim((string) ($request['name'] ?? ''));
+
+        return ['name' =&gt; $name];
+    }
 }</code></pre>
-        <p><code>GET /hello</code> renders <code>views/pages/hello.blade.php</code> directly, and <code>POST /hello</code> sends form data to <code>create()</code>.</p>
+        <p><code>POST /hello</code> sends form data to <code>create($request)</code>, and the returned array is passed to <code>views/pages/hello.blade.php</code>.</p>
 
         <h2>6. Route convention reference</h2>
-        <pre><code>GET /hello          -&gt; views/pages/hello.blade.php (Blade plugin)
+        <pre><code>GET /hello          -&gt; App\Controllers\HelloController::index() (if method exists)
 POST /hello         -&gt; App\Controllers\HelloController::create($request)
-GET /post/comments  -&gt; App\Controllers\PostCommentsController::index()
+GET /post/comments  -&gt; App\Controllers\PostCommentsController::show('comments')
 GET /post/42        -&gt; App\Controllers\PostController::show(42)</code></pre>
-        <p>Resolution order: controller first, then Blade page, then Vue page, then Markdown page.</p>
+        <p>Resolution order: controller method (if class + method exists), then route file in <code>views/pages</code> (<code>.blade.php</code> first, then <code>.md</code>), then 404.</p>
 
         <h2>7. Passing data to views</h2>
-        <pre><code>view()-&gt;share(['name' =&gt; 'Bruno']); // current page</code></pre>
-        <p>Shared variables are available in Blade as regular template variables.</p>
+        <pre><code>public function show($slug): array
+{
+    return ['slug' =&gt; $slug];
+}</code></pre>
+        <p>Controller arrays are passed to matching route views as regular template variables.</p>
 
-        <h2>8. Plugin-based view types</h2>
-        <p>Minimo resolves views through plugins configured in <code>app/plugins.php</code>.</p>
-        <pre><code>views/pages/docs.blade.php   -&gt; /docs
-views/pages/docs-vue.vue     -&gt; /docs-vue
-views/pages/docs-md.md       -&gt; /docs-md</code></pre>
+        <h2>8. Content route types</h2>
+        <pre><code>views/pages/docs.blade.php         -&gt; /docs
+views/pages/docs-md.md             -&gt; /docs-md
+views/pages/blog/hello-world.md    -&gt; /blog/hello-world</code></pre>
+        <p>Markdown files can include front matter and are wrapped by <code>views/layouts/markdown.blade.php</code>.</p>
     </section>
 @endsection

@@ -32,7 +32,7 @@ Request flow:
 - `app/View`: Blade and Markdown renderers.
 - `views/pages`: route files for `.blade.php` and `.md`.
 - `views/layouts`: shared Blade layouts.
-- `views/markdown`: Markdown layout wrapper.
+- `views/layouts/markdown.blade.php`: Markdown layout wrapper.
 
 ## Routing
 
@@ -81,4 +81,4 @@ If no matching page file is found after controller resolution, Minimo returns a 
 - `/blog/hello-world` -> `views/pages/blog/hello-world.md`
 - `/docs-md` -> `views/pages/docs-md.md`
 
-Markdown files are parsed with front matter support and rendered through `views/markdown/layout.blade.php`.
+Markdown files are parsed with front matter support and rendered through `views/layouts/markdown.blade.php`.

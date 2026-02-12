@@ -67,7 +67,7 @@ Examples:
 - `/docs-md` -> `views/pages/docs-md.md`
 - `/foo/bar` -> `views/pages/foo/bar.blade.php` (or `.md`)
 
-Markdown pages are wrapped by `views/markdown/layout.blade.php`.
+Markdown pages are wrapped by `views/layouts/markdown.blade.php`.
 
 ## Controller Response Data
 

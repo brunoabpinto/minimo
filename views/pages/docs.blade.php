@@ -31,7 +31,7 @@
             <li><code>app/View</code>: Blade and Markdown renderers.</li>
             <li><code>views/pages</code>: route files for <code>.blade.php</code> and <code>.md</code>.</li>
             <li><code>views/layouts</code>: shared Blade layouts.</li>
-            <li><code>views/markdown</code>: Markdown layout wrapper.</li>
+            <li><code>views/layouts/markdown.blade.php</code>: Markdown layout wrapper.</li>
         </ul>
 
         <h2>Routing</h2>
@@ -82,6 +82,6 @@ class PostController
             <li><code>/docs-md</code> -> <code>views/pages/docs-md.md</code></li>
         </ul>
 
-        <p>Markdown files are parsed with front matter support and rendered through <code>views/markdown/layout.blade.php</code>.</p>
+        <p>Markdown files are parsed with front matter support and rendered through <code>views/layouts/markdown.blade.php</code>.</p>
     </section>
 @endsection
