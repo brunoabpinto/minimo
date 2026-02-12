@@ -6,7 +6,7 @@ function request_route(): string
 {
     $uri = $_SERVER['REQUEST_URI'] ?? '';
     $path = parse_url($uri, PHP_URL_PATH);
-    return trim((string) $path, '/');
+    return trim((string) $path, '/') ?: 'index';
 }
 
 function request_parts(string $route): array
@@ -23,7 +23,7 @@ function resolve_method(array $parts): string
         default  => 'index',
     };
 
-    if (isset($parts[1]) && is_numeric($parts[1])) {
+    if (isset($parts[1])) {
         return 'show';
     }
 
@@ -51,11 +51,6 @@ function resolve_controller_arg(string $method, array $parts): mixed
     };
 }
 
-function render_plugin_response(array $context): ?string
-{
-    return render_with_plugins($context);
-}
-
 $route = request_route();
 $parts = request_parts($route);
 $method = resolve_method($parts);
@@ -63,27 +58,16 @@ $controllerClass = resolve_controller_class($parts);
 
 if (class_exists($controllerClass) && method_exists($controllerClass, $method)) {
     $arg = resolve_controller_arg($method, $parts);
-    $response = (new $controllerClass())->$method($arg);
-    if ($response !== null) {
-        echo $response;
-    }
-    exit;
+    $controllerResponse = (new $controllerClass())->$method($arg);
 }
 
-$pluginResponse = render_plugin_response([
-    'type' => 'resolve_route',
-    'route' => $route,
-    'parts' => $parts,
-    'method' => $method,
-    'request_method' => $_SERVER['REQUEST_METHOD'] ?? 'GET',
-    'query' => $_GET,
-    'post' => $_POST,
-    'body' => json_decode(file_get_contents('php://input'), true) ?? [],
-]);
+$pluginResponse = render($route, $controllerResponse ?? null)->first();
+
 if ($pluginResponse !== null) {
     echo $pluginResponse;
     exit;
 }
 
 http_response_code(404);
-echo 'Not found.';
+echo render('errors.404')->blade() ?? 'Not found.';
+exit;

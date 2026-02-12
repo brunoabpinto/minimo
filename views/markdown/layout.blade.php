@@ -1,37 +1,45 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle ?? '')
+@section('title', $frontMatter['title'] ?? '')
 @section('head')
-    @isset($metaDescription)
-        <meta name="description" content="{{ $metaDescription }}" />
+    @isset($frontMatter['description'])
+        <meta name="description" content="{{ $frontMatter['description'] }}" />
     @endisset
-    @isset($metaKeywords)
-        <meta name="keywords" content="{{ $metaKeywords }}" />
+    @isset($frontMatter['keywords'])
+        <meta name="keywords" content="{{ $frontMatter['keywords'] }}" />
     @endisset
-    @isset($metaAuthor)
-        <meta name="author" content="{{ $metaAuthor }}" />
+    @isset($frontMatter['author'])
+        <meta name="author" content="{{ $frontMatter['author'] }}" />
     @endisset
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{ $ogTitle ?? ($pageTitle ?? '') }}" />
-    @isset($ogDescription)
-        <meta property="og:description" content="{{ $ogDescription }}" />
+    <meta property="og:title" content="{{ $frontMatter['title'] ?? ($pageTitle ?? '') }}" />
+    @isset($frontMatter['description'])
+        <meta property="og:description" content="{{ $frontMatter['description'] }}" />
     @endisset
-    @isset($ogImage)
-        <meta property="og:image" content="{{ $ogImage }}" />
+    @isset($frontMatter['image'])
+        <meta property="og:image" content="{{ $frontMatter['image'] }}" />
     @endisset
-    @isset($articlePublishedTime)
-        <meta property="article:published_time" content="{{ $articlePublishedTime }}" />
+    @isset($frontMatter['publishDate'])
+        <meta property="article:published_time" content="{{ $frontMatter['publishDate'] }}" />
     @endisset
-    <meta name="twitter:card" content="{{ isset($ogImage) ? 'summary_large_image' : 'summary' }}" />
-    <meta name="twitter:title" content="{{ $ogTitle ?? ($pageTitle ?? '') }}" />
-    @isset($ogDescription)
-        <meta name="twitter:description" content="{{ $ogDescription }}" />
+    <meta name="twitter:card" content="{{ isset($frontMatter['image']) ? 'summary_large_image' : 'summary' }}" />
+    <meta name="twitter:title" content="{{ $frontMatter['title'] ?? ($pageTitle ?? '') }}" />
+    @isset($frontMatter['description'])
+        <meta name="twitter:description" content="{{ $frontMatter['description'] }}" />
     @endisset
-    @isset($ogImage)
-        <meta name="twitter:image" content="{{ $ogImage }}" />
+    @isset($frontMatter['image'])
+        <meta name="twitter:image" content="{{ $frontMatter['image'] }}" />
     @endisset
 @endsection
 
 @section('content')
+    <div class="post-header">
+        <p>{{ date('j M Y', $frontMatter['publishDate'] ?? '')) }} ~
+            {{ ceil(str_word_count($content) / 240) . ' min read' }}</p>
+        <h1>{{ $frontMatter['title'] }}</h1>
+    </div>
+    <hr />
+    <img src="{{ $frontMatter['image'] }}" alt="{{ $frontMatter['title'] }}" />
     {!! $content !!}
+    @include('components.bio')
 @endsection

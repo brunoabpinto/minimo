@@ -2,37 +2,41 @@
 
 namespace App\Core;
 
+use App\View\BladeRenderer;
+use App\View\MarkdownRenderer;
+
 final class ViewResponse
 {
-    private string $pageName;
 
-    public function __construct(string $pageName)
+    public function __construct(private string $path, private ?array $data = []) {}
+
+    public function first(): ?string
     {
-        $this->pageName = trim($pageName, '/');
-    }
+        $files = glob(__DIR__ . "/../../views/pages/{$this->path}.*");
 
-    public function share(array $data): void
-    {
-        $this->render($data);
-    }
-
-    public function render(array $data = []): void
-    {
-        $viewName = 'pages.' . str_replace('/', '.', $this->pageName);
-
-        $response = \render_with_plugins([
-            'type' => 'render_view',
-            'view' => $viewName,
-            'data' => $data,
-        ]);
-
-        if ($response === null) {
-            \http_response_code(404);
-            echo 'View not found.';
-            exit;
+        if (empty($files)) {
+            return null;
         }
 
-        echo $response;
-        exit;
+        foreach ($files as $file) {
+            if (str_ends_with($file, '.blade.php')) {
+                $this->path = 'pages.' . str_replace('/', '.', $this->path);
+                return $this->blade();
+            }
+            if (str_ends_with($file, '.md')) {
+                return $this->markdown($file);
+            }
+        }
+    }
+
+    public function blade(): string
+    {
+        $view = str_replace('/', '.', $this->path);
+        return (new BladeRenderer())->render($view, $this->data);
+    }
+
+    public function markdown(string $path): string
+    {
+        return (new MarkdownRenderer())->render($path);
     }
 }
