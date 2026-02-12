@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace App\View;
 
 use App\View\BladeRenderer;
 use App\View\MarkdownRenderer;
@@ -31,8 +31,7 @@ final class ViewResponse
 
     public function blade(): string
     {
-        $view = str_replace('/', '.', $this->path);
-        return (new BladeRenderer())->render($view, $this->data);
+        return (new BladeRenderer())->render($this->path, $this->data);
     }
 
     public function markdown(string $path): string

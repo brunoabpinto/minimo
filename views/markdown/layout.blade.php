@@ -33,13 +33,5 @@
 @endsection
 
 @section('content')
-    <div class="post-header">
-        <p>{{ date('j M Y', $frontMatter['publishDate'] ?? '')) }} ~
-            {{ ceil(str_word_count($content) / 240) . ' min read' }}</p>
-        <h1>{{ $frontMatter['title'] }}</h1>
-    </div>
-    <hr />
-    <img src="{{ $frontMatter['image'] }}" alt="{{ $frontMatter['title'] }}" />
     {!! $content !!}
-    @include('components.bio')
 @endsection

@@ -32,7 +32,6 @@ class MarkdownRenderer
             [
                 'content' => $content,
                 'frontMatter' => $frontMatter,
-                'readingTimeEstimate' => ceil(str_word_count($content) / 240) . ' min read',
             ],
         )->blade();
 

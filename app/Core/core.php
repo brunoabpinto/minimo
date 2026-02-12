@@ -61,7 +61,7 @@ if (class_exists($controllerClass) && method_exists($controllerClass, $method)) 
     $controllerResponse = (new $controllerClass())->$method($arg);
 }
 
-$pluginResponse = render($route, $controllerResponse ?? null)->first();
+$pluginResponse = render($route, $controllerResponse ?? [])->first();
 
 if ($pluginResponse !== null) {
     echo $pluginResponse;

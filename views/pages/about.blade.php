@@ -4,14 +4,14 @@
     <section class="container">
         <h1>About</h1>
         <p>
-            Minimo is a minimal PHP framework focused on fast iteration: simple controller routing, a plugin-driven
-            rendering pipeline, and file-based views.
+            Minimo is a minimal PHP framework focused on fast iteration: simple controller routing and file-based
+            rendering for Blade and Markdown views.
         </p>
         <p>
-            The stack currently supports Blade views, Markdown pages, and route-based Vue views through plugins.
+            The stack currently supports convention-based controllers, Blade templates, and Markdown pages.
         </p>
         <p>
-            This project is intentionally lightweight so features can be added as plugins instead of framework core.
+            The project stays intentionally lightweight so behavior is easy to read directly from the core files.
         </p>
     </section>
 @endsection
