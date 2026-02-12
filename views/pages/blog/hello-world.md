@@ -5,4 +5,10 @@ publishDate: 2026-01-20
 description: Every blog starts with a single post.
 ---
 
+# Hello World 👋
+
+<hr />
+
+![Hello world](/images/hello-world.jpg)
+
 This post was intentionally left blank.

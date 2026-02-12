@@ -15,7 +15,13 @@ final class ViewResponse
         $files = glob(__DIR__ . "/../../views/pages/{$this->path}.*");
 
         if (empty($files)) {
-            return null;
+            $files = glob(__DIR__ . "/../../views/pages/{$this->path}/index.*");
+
+            if (empty($files)) {
+                return null;
+            }
+
+            $this->path .= '/index';
         }
 
         foreach ($files as $file) {
