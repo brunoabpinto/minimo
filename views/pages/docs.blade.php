@@ -92,12 +92,18 @@ class PostController
         <pre><code>php minimo help
 php minimo create:page somepage
 php minimo create:post somepost
+php minimo create:controller FooBarController
+php minimo create:controller TestController --md
+php minimo create:controller TestController --blade
 php minimo dev
 php minimo dev 9000</code></pre>
         <p>Generated paths:</p>
         <ul>
             <li><code>create:page</code> -> <code>views/pages/somepage.blade.php</code></li>
             <li><code>create:post</code> -> <code>views/pages/somepost.md</code></li>
+            <li><code>create:controller</code> -> <code>app/Controllers/FooBarController.php</code></li>
+            <li><code>create:controller TestController --md</code> -> <code>app/Controllers/TestController.php</code> + <code>views/pages/test.blade.md</code></li>
+            <li><code>create:controller TestController --blade</code> -> <code>app/Controllers/TestController.php</code> + <code>views/pages/test.blade.php</code></li>
         </ul>
         <p><code>dev</code> starts a local server on <code>127.0.0.1:8080</code> by default. Pass a port to override.</p>
         <p>It also works seamlessly with Herd:</p>

@@ -4,6 +4,7 @@ namespace Minimo\Core\Console;
 
 use Minimo\Core\Console\Commands\CreatePageCommand;
 use Minimo\Core\Console\Commands\CreatePostCommand;
+use Minimo\Core\Console\Commands\CreateControllerCommand;
 use Minimo\Core\Console\Commands\ServeCommand;
 
 final class Application
@@ -28,6 +29,10 @@ final class Application
             return (new CreatePageCommand($this->basePath))->handle(array_slice($argv, 2));
         }
 
+        if ($command === 'create:controller') {
+            return (new CreateControllerCommand($this->basePath))->handle(array_slice($argv, 2));
+        }
+
         if ($command === 'dev') {
             return (new ServeCommand($this->basePath))->handle(array_slice($argv, 2));
         }
@@ -49,6 +54,8 @@ Usage:
 Available commands:
   create:page <name>   Create a Blade page in views
   create:post <slug>   Create a markdown post in views/pages
+  create:controller <name> [--md|--blade]
+                        Create a controller (+ optional view)
   dev [port]           Start the local PHP dev server (default: 8080)
 
 TXT;

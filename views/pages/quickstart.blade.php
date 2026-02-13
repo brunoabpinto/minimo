@@ -14,8 +14,9 @@ cd minimo</code></pre>
 
         <h2>3. Generate starter content with Minimo CLI</h2>
         <pre><code>php minimo create:page somepage
-php minimo create:post somepost</code></pre>
-        <p>Creates <code>views/pages/somepage.blade.php</code> and <code>views/pages/somepost.md</code>.</p>
+php minimo create:post somepost
+php minimo create:controller TestController --blade</code></pre>
+        <p>Creates <code>views/pages/somepage.blade.php</code>, <code>views/pages/somepost.md</code>, <code>app/Controllers/TestController.php</code>, and <code>views/pages/test.blade.php</code>.</p>
 
         <h2>4. Start the local server</h2>
         <pre><code>php minimo dev
