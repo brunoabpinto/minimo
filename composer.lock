@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec10189fac098dc94774d550fd676d7f",
+    "content-hash": "0a9d4f76311eca2914324eee07289345",
     "packages": [
         {
             "name": "brunopinto/minimo-core",
-            "version": "1.0.1",
+            "version": "1.1.1",
             "dist": {
                 "type": "path",
                 "url": "packages/minimo-core",
-                "reference": "130c4f75e0a71beaabccbd7d52d15fe051fc14f4"
+                "reference": "92bd5a2d1b46d3e79304a4be1a8eb55d530c0459"
             },
             "require": {
                 "illuminate/events": "^12.0",
@@ -31,7 +31,7 @@
             ],
             "description": "Core runtime for the Minimo framework",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2634,15 +2634,15 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.3.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.9.0"
 }

@@ -2,6 +2,8 @@
 
 namespace Minimo\Core\View;
 
+use Minimo\Core\Support\PathResolver;
+
 final class ViewResponse
 {
     private ?BladeRenderer $bladeRenderer = null;
@@ -109,11 +111,6 @@ final class ViewResponse
 
     private function pagesPath(): string
     {
-        return $this->basePath() . '/views/pages';
-    }
-
-    private function basePath(): string
-    {
-        return dirname(__DIR__, 5);
+        return PathResolver::basePath() . '/views/pages';
     }
 }

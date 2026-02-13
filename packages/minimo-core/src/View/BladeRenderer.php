@@ -10,6 +10,7 @@ use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
+use Minimo\Core\Support\PathResolver;
 
 final class BladeRenderer
 {
@@ -35,7 +36,7 @@ final class BladeRenderer
 
     private function createFactory(): Factory
     {
-        $basePath = $this->basePath();
+        $basePath = PathResolver::basePath();
         $viewsPath = $basePath . '/views';
         $cachePath = $basePath . '/storage/cache/views';
 
@@ -59,10 +60,5 @@ final class BladeRenderer
         $factory->addExtension('blade.md', 'blade');
 
         return $factory;
-    }
-
-    private function basePath(): string
-    {
-        return dirname(__DIR__, 5);
     }
 }
