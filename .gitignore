@@ -27,3 +27,4 @@ composer.phar
 # Wasmer deploy
 /wasmer.toml
 /app.yaml
+/build
