@@ -31,7 +31,6 @@ final class BuildCommand
         $buildPath = $this->basePath . DIRECTORY_SEPARATOR . 'build';
         $this->resetBuildDirectory($buildPath);
         $this->copyPublicAssets($buildPath);
-
         $routes = $this->collectRoutes($pagesPath);
         sort($routes);
 
@@ -52,7 +51,6 @@ final class BuildCommand
                 $relativeOutputPath = $this->outputPathForRoute($route);
                 $fullOutputPath = $buildPath . DIRECTORY_SEPARATOR . $relativeOutputPath;
                 $outputDir = dirname($fullOutputPath);
-                $html = $this->rewriteAssetPaths($html, $relativeOutputPath);
 
                 if (!is_dir($outputDir)) {
                     mkdir($outputDir, 0777, true);
@@ -137,29 +135,22 @@ final class BuildCommand
 
     private function renderRoute(string $route): ?string
     {
-        $data = $this->controllerData($route);
-
-        return (new ViewResponse($route, $data))->first();
+        return (new ViewResponse($route, $this->controllerData($route)))->first();
     }
 
     private function controllerData(string $route): array
     {
-        $parts = explode('/', $route);
+        $parts = explode('/', trim($route, '/'));
+        $base = $parts[0] ?? 'index';
         $method = isset($parts[1]) ? 'show' : 'index';
+        $controller = 'App\\Controllers\\' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $base))) . 'Controller';
 
-        $name = ucfirst($parts[0] ?: 'index');
-        if (!is_numeric($parts[1] ?? null)) {
-            $name .= ucfirst($parts[1] ?? '');
-        }
-
-        $controllerClass = 'App\\Controllers\\' . $name . 'Controller';
-
-        if (!class_exists($controllerClass) || !method_exists($controllerClass, $method)) {
+        if (!class_exists($controller) || !method_exists($controller, $method)) {
             return [];
         }
 
         $arg = $method === 'show' ? ($parts[1] ?? null) : null;
-        $response = (new $controllerClass())->$method($arg);
+        $response = (new $controller())->{$method}($arg);
 
         return is_array($response) ? $response : [];
     }
@@ -170,7 +161,7 @@ final class BuildCommand
             return 'index.html';
         }
 
-        return $route . '.html';
+        return $route . DIRECTORY_SEPARATOR . 'index.html';
     }
 
     private function copyPublicAssets(string $buildPath): void
@@ -214,22 +205,4 @@ final class BuildCommand
         }
     }
 
-    private function rewriteAssetPaths(string $html, string $relativeOutputPath): string
-    {
-        $directory = dirname(str_replace('\\', '/', $relativeOutputPath));
-        $depth = ($directory === '.' || $directory === '') ? 0 : substr_count($directory, '/') + 1;
-        $prefix = str_repeat('../', $depth);
-        $styleDouble = '="' . $prefix . 'styles/';
-        $styleSingle = "='" . $prefix . 'styles/';
-        $imageDouble = '="' . $prefix . 'images/';
-        $imageSingle = "='" . $prefix . 'images/';
-        $buildDouble = '="' . $prefix . 'build/';
-        $buildSingle = "='" . $prefix . 'build/';
-
-        return str_replace(
-            ['="/styles/', "='/styles/", '="/images/', "='/images/", '="/build/', "='/build/"],
-            [$styleDouble, $styleSingle, $imageDouble, $imageSingle, $buildDouble, $buildSingle],
-            $html
-        );
-    }
 }
