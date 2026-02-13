@@ -1,5 +1,5 @@
 {
-    "name": "brunopinto/minimo",
+    "name": "minimo/minimo",
     "repositories": [
         {
             "type": "path",
@@ -26,7 +26,7 @@
         "minimo"
     ],
     "require": {
-        "brunopinto/minimo-core": "^1.0",
+        "minimo/core": "^1.0",
         "php": "^8.3",
         "illuminate/events": "^12.0",
         "illuminate/view": "^12.0",
