@@ -17,9 +17,9 @@ function config(?string $key = null, $default = null)
     return $config[$key] ?? $default;
 }
 
-function render(string $view, ?array $data = []): App\View\ViewResponse
+function render(string $view, ?array $data = []): Minimo\Core\View\ViewResponse
 {
-    return new App\View\ViewResponse($view, $data);
+    return new Minimo\Core\View\ViewResponse($view, $data);
 }
 
 function dd($data): void

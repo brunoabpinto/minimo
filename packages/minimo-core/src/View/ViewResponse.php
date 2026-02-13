@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View;
+namespace Minimo\Core\View;
 
 final class ViewResponse
 {
@@ -53,7 +53,8 @@ final class ViewResponse
 
     private function findPageFiles(string $routePath): array
     {
-        $files = glob(__DIR__ . "/../../views/pages/{$routePath}.*");
+        $files = glob($this->pagesPath() . "/{$routePath}.*");
+
         return $files ?: [];
     }
 
@@ -81,6 +82,7 @@ final class ViewResponse
         }
 
         $this->bladeRenderer = new BladeRenderer();
+
         return $this->bladeRenderer;
     }
 
@@ -91,6 +93,7 @@ final class ViewResponse
         }
 
         $this->markdownRenderer = new MarkdownRenderer();
+
         return $this->markdownRenderer;
     }
 
@@ -102,5 +105,15 @@ final class ViewResponse
     private function renderBladePage(): string
     {
         return $this->bladeRenderer()->render($this->toBladeViewPath($this->path), $this->data);
+    }
+
+    private function pagesPath(): string
+    {
+        return $this->basePath() . '/views/pages';
+    }
+
+    private function basePath(): string
+    {
+        return dirname(__DIR__, 5);
     }
 }

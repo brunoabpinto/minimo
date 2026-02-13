@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\View\MarkdownRenderer;
+use Minimo\Core\View\MarkdownRenderer;
 
 class ContentRepository
 {
@@ -16,7 +16,7 @@ class ContentRepository
     public function getPosts(): array
     {
         $renderer = new MarkdownRenderer();
-        $files = glob("../views/pages/{$this->repository}/*.md");
+        $files = glob(__DIR__ . "/../../views/pages/{$this->repository}/*.md");
         $posts = [];
         foreach ($files as $file) {
             $post = $renderer->getPost($file);

@@ -4,8 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4eb55293581ad16657b8a814be8fa17",
+    "content-hash": "ec10189fac098dc94774d550fd676d7f",
     "packages": [
+        {
+            "name": "brunopinto/minimo-core",
+            "version": "1.0.1",
+            "dist": {
+                "type": "path",
+                "url": "packages/minimo-core",
+                "reference": "130c4f75e0a71beaabccbd7d52d15fe051fc14f4"
+            },
+            "require": {
+                "illuminate/events": "^12.0",
+                "illuminate/view": "^12.0",
+                "league/commonmark": "^2.6",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Minimo\\Core\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Core runtime for the Minimo framework",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
+        },
         {
             "name": "carbonphp/carbon-doctrine-types",
             "version": "3.2.0",
@@ -2605,15 +2634,15 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.0"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.3.0"
 }

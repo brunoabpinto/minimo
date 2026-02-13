@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View;
+namespace Minimo\Core\View;
 
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
@@ -11,30 +11,33 @@ use Illuminate\View\Engines\EngineResolver;
 use Illuminate\View\Factory;
 use Illuminate\View\FileViewFinder;
 
-class BladeRenderer
+final class BladeRenderer
 {
     private ?Factory $factory = null;
 
     public function render(string $viewName, ?array $data = []): ?string
     {
         $factory = $this->resolveFactory();
+
         return $factory->make($viewName, $data)->render();
     }
 
-    private function resolveFactory(): ?Factory
+    private function resolveFactory(): Factory
     {
         if ($this->factory !== null) {
             return $this->factory;
         }
 
         $this->factory = $this->createFactory();
+
         return $this->factory;
     }
 
     private function createFactory(): Factory
     {
-        $viewsPath = __DIR__ . '/../../views';
-        $cachePath = __DIR__ . '/../../storage/cache/views';
+        $basePath = $this->basePath();
+        $viewsPath = $basePath . '/views';
+        $cachePath = $basePath . '/storage/cache/views';
 
         if (!is_dir($cachePath)) {
             mkdir($cachePath, 0777, true);
@@ -56,5 +59,10 @@ class BladeRenderer
         $factory->addExtension('blade.md', 'blade');
 
         return $factory;
+    }
+
+    private function basePath(): string
+    {
+        return dirname(__DIR__, 5);
     }
 }

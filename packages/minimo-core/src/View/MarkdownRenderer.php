@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View;
+namespace Minimo\Core\View;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -8,9 +8,10 @@ use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use League\CommonMark\MarkdownConverter;
 
-class MarkdownRenderer
+final class MarkdownRenderer
 {
     private MarkdownConverter $converter;
+    private ?BladeRenderer $bladeRenderer = null;
 
     public function __construct()
     {
@@ -48,13 +49,13 @@ class MarkdownRenderer
         $data = $this->convertSource($source);
         $content = $data['content'];
 
-        $rendered = render(
+        $rendered = $this->bladeRenderer()->render(
             'layouts.markdown',
             [
                 'content' => $content,
                 'frontMatter' => $data['frontMatter'],
             ],
-        )->blade();
+        );
 
         return $rendered ?? $content;
     }
@@ -76,5 +77,16 @@ class MarkdownRenderer
         }
 
         return is_array($converted->getFrontMatter()) ? $converted->getFrontMatter() : [];
+    }
+
+    private function bladeRenderer(): BladeRenderer
+    {
+        if ($this->bladeRenderer !== null) {
+            return $this->bladeRenderer;
+        }
+
+        $this->bladeRenderer = new BladeRenderer();
+
+        return $this->bladeRenderer;
     }
 }
