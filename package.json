@@ -1,12 +1,14 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "minimo-vite-plugin": "^0.1.6",
     "postcss": "^8.4.49",
-    "vite": "^5.4.11"
+    "vite": "^6.4.1"
   }
 }
