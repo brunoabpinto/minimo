@@ -2,14 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Repositories\BlogRepository;
+use App\Repositories\ContentRepository;
 
 class BlogController
 {
 
     public function index()
     {
-        $posts = (new BlogRepository())->getPosts();
-        return compact('posts');
+        $repository = new ContentRepository('blog');
+        return ['posts' => $repository->getPosts()];
     }
 }

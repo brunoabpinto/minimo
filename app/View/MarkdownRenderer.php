@@ -22,24 +22,59 @@ class MarkdownRenderer
 
     public function render(string $path): ?string
     {
-        $source = file_get_contents($path);
+        return $this->renderFromSource(file_get_contents($path));
+    }
 
-        $converted = $this->converter->convert($source);
-        $content = $converted->getContent();
-        $frontMatter = [];
+    public function renderString(string $source): ?string
+    {
+        return $this->renderFromSource($source);
+    }
 
-        if ($converted instanceof RenderedContentWithFrontMatter) {
-            $frontMatter = is_array($converted->getFrontMatter()) ? $converted->getFrontMatter() : [];
+    public function getPost(string $filePath): ?array
+    {
+        if (empty($filePath)) {
+            return null;
         }
+
+        $data = $this->convertSource(file_get_contents($filePath));
+        $post = $data['frontMatter'];
+        $post['url'] = '/blog/' . pathinfo($filePath, PATHINFO_FILENAME);
+
+        return $post;
+    }
+
+    private function renderFromSource(string $source): ?string
+    {
+        $data = $this->convertSource($source);
+        $content = $data['content'];
 
         $rendered = render(
             'layouts.markdown',
             [
                 'content' => $content,
-                'frontMatter' => $frontMatter,
+                'frontMatter' => $data['frontMatter'],
             ],
         )->blade();
 
         return $rendered ?? $content;
+    }
+
+    private function convertSource(string $source): array
+    {
+        $converted = $this->converter->convert($source);
+
+        return [
+            'content' => $converted->getContent(),
+            'frontMatter' => $this->extractFrontMatter($converted),
+        ];
+    }
+
+    private function extractFrontMatter(mixed $converted): array
+    {
+        if (!$converted instanceof RenderedContentWithFrontMatter) {
+            return [];
+        }
+
+        return is_array($converted->getFrontMatter()) ? $converted->getFrontMatter() : [];
     }
 }

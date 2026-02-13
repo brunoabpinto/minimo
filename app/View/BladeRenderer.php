@@ -53,6 +53,7 @@ class BladeRenderer
         $finder = new FileViewFinder($filesystem, [$viewsPath]);
         $factory = new Factory($resolver, $finder, $dispatcher);
         $factory->addExtension('blade.php', 'blade');
+        $factory->addExtension('blade.md', 'blade');
 
         return $factory;
     }
