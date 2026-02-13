@@ -72,12 +72,31 @@ final class CreatePostCommand
         return ucfirst($words);
     }
 
+    function generateImage(): string
+    {
+        $img = imagecreatetruecolor(1, 1);
+
+        $color = imagecolorallocate($img, rand(0, 255), rand(0, 255), rand(0, 255));
+        imagesetpixel($img, 0, 0, $color);
+
+        ob_start();
+        imagepng($img);
+        $data = ob_get_clean();
+
+        imagedestroy($img);
+
+        return "data:image/png;base64," . base64_encode($data);
+    }
+
     private function contentTemplate(string $title): string
     {
+        $date = date('Y-m-d');
         return <<<MD
         ---
         title: {$title}
         description: Write something amazing
+        image: {$this->generateImage()}
+        publishDate: {$date}
         ---
 
         # {$title}
