@@ -6,6 +6,7 @@ use Minimo\Core\Console\Commands\CreatePageCommand;
 use Minimo\Core\Console\Commands\CreatePostCommand;
 use Minimo\Core\Console\Commands\CreateControllerCommand;
 use Minimo\Core\Console\Commands\BuildCommand;
+use Minimo\Core\Console\Commands\PreviewCommand;
 use Minimo\Core\Console\Commands\ServeCommand;
 
 final class Application
@@ -42,6 +43,10 @@ final class Application
             return (new BuildCommand($this->basePath))->handle(array_slice($argv, 2));
         }
 
+        if ($command === 'preview') {
+            return (new PreviewCommand($this->basePath))->handle(array_slice($argv, 2));
+        }
+
         fwrite(STDERR, "Unknown command: {$command}" . PHP_EOL . PHP_EOL);
         $this->printHelp();
 
@@ -63,6 +68,7 @@ Available commands:
                         Create a controller (+ optional view)
   dev [port]           Start local PHP + Vite dev servers (default: 8080)
   build                Render route views into static HTML in /build
+  preview [port]       Build and serve static files from /build (default: 9090)
 
 TXT;
     }
