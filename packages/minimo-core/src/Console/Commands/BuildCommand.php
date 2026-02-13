@@ -30,6 +30,7 @@ final class BuildCommand
 
         $buildPath = $this->basePath . DIRECTORY_SEPARATOR . 'build';
         $this->resetBuildDirectory($buildPath);
+        $this->copyPublicAssets($buildPath);
 
         $routes = $this->collectRoutes($pagesPath);
         sort($routes);
@@ -51,6 +52,7 @@ final class BuildCommand
                 $relativeOutputPath = $this->outputPathForRoute($route);
                 $fullOutputPath = $buildPath . DIRECTORY_SEPARATOR . $relativeOutputPath;
                 $outputDir = dirname($fullOutputPath);
+                $html = $this->rewriteAssetPaths($html, $relativeOutputPath);
 
                 if (!is_dir($outputDir)) {
                     mkdir($outputDir, 0777, true);
@@ -169,5 +171,63 @@ final class BuildCommand
         }
 
         return $route . '.html';
+    }
+
+    private function copyPublicAssets(string $buildPath): void
+    {
+        foreach (['styles', 'images'] as $dir) {
+            $source = $this->basePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $dir;
+            $target = $buildPath . DIRECTORY_SEPARATOR . $dir;
+
+            if (!is_dir($source)) {
+                continue;
+            }
+
+            $this->copyDirectory($source, $target);
+        }
+    }
+
+    private function copyDirectory(string $source, string $target): void
+    {
+        if (!is_dir($target)) {
+            mkdir($target, 0777, true);
+        }
+
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($source, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        foreach ($iterator as $item) {
+            $relative = substr($item->getPathname(), strlen($source) + 1);
+            $destination = $target . DIRECTORY_SEPARATOR . $relative;
+
+            if ($item->isDir()) {
+                if (!is_dir($destination)) {
+                    mkdir($destination, 0777, true);
+                }
+
+                continue;
+            }
+
+            copy($item->getPathname(), $destination);
+        }
+    }
+
+    private function rewriteAssetPaths(string $html, string $relativeOutputPath): string
+    {
+        $directory = dirname(str_replace('\\', '/', $relativeOutputPath));
+        $depth = ($directory === '.' || $directory === '') ? 0 : substr_count($directory, '/') + 1;
+        $prefix = str_repeat('../', $depth);
+        $styleDouble = '="' . $prefix . 'styles/';
+        $styleSingle = "='" . $prefix . 'styles/';
+        $imageDouble = '="' . $prefix . 'images/';
+        $imageSingle = "='" . $prefix . 'images/';
+
+        return str_replace(
+            ['="/styles/', "='/styles/", '="/images/', "='/images/"],
+            [$styleDouble, $styleSingle, $imageDouble, $imageSingle],
+            $html
+        );
     }
 }
