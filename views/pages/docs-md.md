@@ -18,19 +18,17 @@ description: Core architecture and routing behavior for the current Minimo runti
 
 <p class="docs-path">View path: <code>views/pages/docs-md.md</code></p>
 
-Minimo is a lightweight PHP framework with convention-based controller routing and file-based rendering.
+Minimo is a lightweight PHP framework with convention-based controller routing, file-based rendering, and a built-in content CLI.
 
 Request flow:
 
-`public/index.php` -> `app/Core/core.php` -> controller match -> Blade/Markdown route file -> 404
+`public/index.php` -> controller match -> route file (`.blade.php`/`.blade.md`/`.md`) -> 404
 
 ## Directory Structure
 
 - `app/Controllers`: HTTP controllers.
-- `app/Core`: framework request and routing core.
 - `app/Repositories`: data access classes.
-- `app/View`: Blade and Markdown renderers.
-- `views/pages`: route files for `.blade.php` and `.md`.
+- `views/pages`: route files for `.blade.php`, `.blade.md`, and `.md`.
 - `views/layouts`: shared Blade layouts.
 - `views/layouts/markdown.blade.php`: Markdown layout wrapper.
 
@@ -70,15 +68,40 @@ class PostController
 
 If no matching page file is found after controller resolution, Minimo returns a 404 page.
 
-## Blade Views
+## Route File Types
 
 - `/docs` -> `views/pages/docs.blade.php`
-- `/about` -> `views/pages/about.blade.php`
-- `/foo/bar` -> `views/pages/foo/bar.blade.php`
+- `/test` -> `views/pages/test.blade.md`
+- `/blog/hello-world` -> `views/pages/blog/hello-world.md`
+
+## Blade + Markdown (`.blade.md`)
+
+A `.blade.md` file is compiled as Blade first, then parsed as Markdown.
+
+```blade
+@php($name = 'Bruno')
+
+# Hello {{ $name }}
+```
 
 ## Markdown Views
 
-- `/blog/hello-world` -> `views/pages/blog/hello-world.md`
 - `/docs-md` -> `views/pages/docs-md.md`
+- `/blog/hello-world` -> `views/pages/blog/hello-world.md`
+
+## Minimo CLI
+
+Use the project CLI from the repository root:
+
+```bash
+minimo help
+minimo create:page somepage
+minimo create:post somepost
+```
+
+Generated paths:
+
+- `create:page` -> `views/pages/somepage.blade.php`
+- `create:post` -> `views/pages/somepost.md`
 
 Markdown files are parsed with front matter support and rendered through `views/layouts/markdown.blade.php`.

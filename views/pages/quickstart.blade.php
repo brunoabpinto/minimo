@@ -12,11 +12,16 @@ cd minimo</code></pre>
         <h2>2. Install dependencies</h2>
         <pre><code>composer install</code></pre>
 
-        <h2>3. Start the local server</h2>
+        <h2>3. Generate starter content with Minimo CLI</h2>
+        <pre><code>minimo create:page somepage
+minimo create:post somepost</code></pre>
+        <p>Creates <code>views/pages/somepage.blade.php</code> and <code>views/pages/somepost.md</code>.</p>
+
+        <h2>4. Start the local server</h2>
         <pre><code>php -S localhost:8000 -t public</code></pre>
         <p>Open <code>http://localhost:8000</code> in your browser.</p>
 
-        <h2>4. Create a Hello page with a form</h2>
+        <h2>5. Create a Hello page with a form</h2>
         <p>Create <code>views/pages/hello.blade.php</code>:</p>
         <pre><code>@@extends('layouts.app')
 
@@ -38,7 +43,7 @@ cd minimo</code></pre>
 @@endsection</code></pre>
         <p>Open <code>/hello</code>.</p>
 
-        <h2>5. Use your existing controller</h2>
+        <h2>6. Use your existing controller</h2>
         <p>In your existing <code>HelloController</code>, read posted data in <code>create()</code> and return it as view data:</p>
         <pre><code>&lt;?php
 
@@ -55,24 +60,25 @@ class HelloController
 }</code></pre>
         <p><code>POST /hello</code> sends form data to <code>create($request)</code>, and the returned array is passed to <code>views/pages/hello.blade.php</code>.</p>
 
-        <h2>6. Route convention reference</h2>
+        <h2>7. Route convention reference</h2>
         <pre><code>GET /hello          -&gt; App\Controllers\HelloController::index() (if method exists)
 POST /hello         -&gt; App\Controllers\HelloController::create($request)
 GET /post/comments  -&gt; App\Controllers\PostCommentsController::show('comments')
 GET /post/42        -&gt; App\Controllers\PostController::show(42)</code></pre>
-        <p>Resolution order: controller method (if class + method exists), then route file in <code>views/pages</code> (<code>.blade.php</code> first, then <code>.md</code>), then 404.</p>
+        <p>Resolution order: controller method (if class + method exists), then route file in <code>views/pages</code> (<code>.blade.php</code>, then <code>.blade.md</code>, then <code>.md</code>), then 404.</p>
 
-        <h2>7. Passing data to views</h2>
+        <h2>8. Passing data to views</h2>
         <pre><code>public function show($slug): array
 {
     return ['slug' =&gt; $slug];
 }</code></pre>
         <p>Controller arrays are passed to matching route views as regular template variables.</p>
 
-        <h2>8. Content route types</h2>
+        <h2>9. Content route types</h2>
         <pre><code>views/pages/docs.blade.php         -&gt; /docs
+views/pages/test.blade.md          -&gt; /test
 views/pages/docs-md.md             -&gt; /docs-md
 views/pages/blog/hello-world.md    -&gt; /blog/hello-world</code></pre>
-        <p>Markdown files can include front matter and are wrapped by <code>views/layouts/markdown.blade.php</code>.</p>
+        <p><code>.blade.md</code> files are rendered by Blade first, then parsed as Markdown. Markdown files can include front matter and are wrapped by <code>views/layouts/markdown.blade.php</code>.</p>
     </section>
 @endsection

@@ -4,8 +4,8 @@ Live preview/docs: [minimo.infinityfree.me](https://minimo.infinityfree.me/)
 
 Minimo is a lightweight PHP framework with:
 - convention-based controller routing
-- file-based route rendering
-- Blade and Markdown page support
+- file-based route rendering for `.blade.php`, `.blade.md`, and `.md`
+- a built-in `minimo` CLI for content scaffolding
 
 ## Requirements
 
@@ -15,6 +15,8 @@ Minimo is a lightweight PHP framework with:
 ## Install
 
 ```bash
+git clone https://github.com/brunoabpinto/minimo.git
+cd minimo
 composer install
 ```
 
@@ -28,12 +30,11 @@ Open `http://localhost:8000`.
 
 ## Request Flow
 
-`public/index.php` loads `app/Core/core.php`, then resolves in this order:
+Requests resolve in this order:
 
 1. Controller method (if class + method exists)
-2. Blade page file in `views/pages`
-3. Markdown page file in `views/pages`
-4. `404 Not found.`
+2. Route file in `views/pages` (`.blade.php`, `.blade.md`, or `.md`)
+3. `404 Not found.`
 
 ## Routing Conventions
 
@@ -57,6 +58,7 @@ HTTP verb to method mapping:
 Route files live in `views/pages`:
 
 - Blade: `views/pages/<route-key>.blade.php`
+- Blade + Markdown: `views/pages/<route-key>.blade.md`
 - Markdown: `views/pages/<route-key>.md`
 
 `<route-key>` is the route path as-is (supports nested directories).
@@ -64,10 +66,28 @@ Route files live in `views/pages`:
 Examples:
 
 - `/docs` -> `views/pages/docs.blade.php`
+- `/test` -> `views/pages/test.blade.md`
 - `/docs-md` -> `views/pages/docs-md.md`
 - `/foo/bar` -> `views/pages/foo/bar.blade.php` (or `.md`)
 
 Markdown pages are wrapped by `views/layouts/markdown.blade.php`.
+
+`.blade.md` files are rendered as Blade first, then parsed as Markdown through the same markdown layout.
+
+## Minimo CLI
+
+Run from the project root:
+
+```bash
+minimo help
+minimo create:page somepage
+minimo create:post somepost
+```
+
+Generated files:
+
+- `create:page` -> `views/pages/somepage.blade.php`
+- `create:post` -> `views/pages/somepost.md`
 
 ## Controller Response Data
 

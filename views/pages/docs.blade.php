@@ -18,18 +18,16 @@
         <h1>Minimo Framework Documentation</h1>
         <p class="docs-path">View path: <code>views/pages/docs.blade.php</code></p>
 
-        <p>Minimo is a lightweight PHP framework with convention-based controller routing and file-based rendering.</p>
+        <p>Minimo is a lightweight PHP framework with convention-based controller routing, file-based rendering, and a built-in content CLI.</p>
 
         <p>Request flow:</p>
-        <p><code>public/index.php</code> -> <code>app/Core/core.php</code> -> controller match -> Blade/Markdown route file -> 404</p>
+        <p><code>public/index.php</code> -> controller match -> route file (<code>.blade.php</code>/<code>.blade.md</code>/<code>.md</code>) -> 404</p>
 
         <h2>Directory Structure</h2>
         <ul>
             <li><code>app/Controllers</code>: HTTP controllers.</li>
-            <li><code>app/Core</code>: framework request and routing core.</li>
             <li><code>app/Repositories</code>: data access classes.</li>
-            <li><code>app/View</code>: Blade and Markdown renderers.</li>
-            <li><code>views/pages</code>: route files for <code>.blade.php</code> and <code>.md</code>.</li>
+            <li><code>views/pages</code>: route files for <code>.blade.php</code>, <code>.blade.md</code>, and <code>.md</code>.</li>
             <li><code>views/layouts</code>: shared Blade layouts.</li>
             <li><code>views/layouts/markdown.blade.php</code>: Markdown layout wrapper.</li>
         </ul>
@@ -69,17 +67,34 @@ class PostController
 
         <p>If no matching page file is found after controller resolution, Minimo returns a 404 page.</p>
 
-        <h2>Blade Views</h2>
+        <h2>Route File Types</h2>
         <ul>
             <li><code>/docs</code> -> <code>views/pages/docs.blade.php</code></li>
-            <li><code>/about</code> -> <code>views/pages/about.blade.php</code></li>
-            <li><code>/foo/bar</code> -> <code>views/pages/foo/bar.blade.php</code></li>
+            <li><code>/test</code> -> <code>views/pages/test.blade.md</code></li>
+            <li><code>/blog/hello-world</code> -> <code>views/pages/blog/hello-world.md</code></li>
         </ul>
+
+        <h2>Blade + Markdown (.blade.md)</h2>
+        <p>A <code>.blade.md</code> file is compiled as Blade first, then parsed as Markdown.</p>
+        <pre><code>@@php($name = 'Bruno')
+
+# Hello @{{ $name }}</code></pre>
 
         <h2>Markdown Views</h2>
         <ul>
-            <li><code>/blog/hello-world</code> -> <code>views/pages/blog/hello-world.md</code></li>
             <li><code>/docs-md</code> -> <code>views/pages/docs-md.md</code></li>
+            <li><code>/blog/hello-world</code> -> <code>views/pages/blog/hello-world.md</code></li>
+        </ul>
+
+        <h2>Minimo CLI</h2>
+        <p>Use the project CLI from the repository root:</p>
+        <pre><code>minimo help
+minimo create:page somepage
+minimo create:post somepost</code></pre>
+        <p>Generated paths:</p>
+        <ul>
+            <li><code>create:page</code> -> <code>views/pages/somepage.blade.php</code></li>
+            <li><code>create:post</code> -> <code>views/pages/somepost.md</code></li>
         </ul>
 
         <p>Markdown files are parsed with front matter support and rendered through <code>views/layouts/markdown.blade.php</code>.</p>

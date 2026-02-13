@@ -82,7 +82,7 @@ final class CreatePostCommand
 
         # {$title}
 
-        Write something amazing. 1
+        Write something amazing.
         MD;
     }
 }
