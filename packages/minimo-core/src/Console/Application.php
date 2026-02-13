@@ -61,7 +61,7 @@ Available commands:
   create:post <slug>   Create a markdown post in views/pages
   create:controller <name> [--md|--blade]
                         Create a controller (+ optional view)
-  dev [port]           Start the local PHP dev server (default: 8080)
+  dev [port]           Start local PHP + Vite dev servers (default: 8080)
   build                Render route views into static HTML in /build
 
 TXT;

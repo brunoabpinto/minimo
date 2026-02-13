@@ -29,3 +29,8 @@ function dd($data): void
     echo '</pre>';
     exit;
 }
+
+function vite_assets(array|string $entries): string
+{
+    return Minimo\Core\Support\Vite::assets($entries, dirname(__DIR__));
+}

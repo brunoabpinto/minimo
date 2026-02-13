@@ -175,7 +175,7 @@ final class BuildCommand
 
     private function copyPublicAssets(string $buildPath): void
     {
-        foreach (['styles', 'images'] as $dir) {
+        foreach (['styles', 'images', 'build'] as $dir) {
             $source = $this->basePath . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $dir;
             $target = $buildPath . DIRECTORY_SEPARATOR . $dir;
 
@@ -223,10 +223,12 @@ final class BuildCommand
         $styleSingle = "='" . $prefix . 'styles/';
         $imageDouble = '="' . $prefix . 'images/';
         $imageSingle = "='" . $prefix . 'images/';
+        $buildDouble = '="' . $prefix . 'build/';
+        $buildSingle = "='" . $prefix . 'build/';
 
         return str_replace(
-            ['="/styles/', "='/styles/", '="/images/', "='/images/"],
-            [$styleDouble, $styleSingle, $imageDouble, $imageSingle],
+            ['="/styles/', "='/styles/", '="/images/', "='/images/", '="/build/', "='/build/"],
+            [$styleDouble, $styleSingle, $imageDouble, $imageSingle, $buildDouble, $buildSingle],
             $html
         );
     }

@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title', 'Minimo')</title>
     @yield('head')
-    <link rel="stylesheet" href="/styles/app.css?v=20260211b" />
+    <link rel="stylesheet" href="/styles/app.css" />
+    @php($viteAssets = vite_assets('resources/js/app.js'))
+    @if ($viteAssets !== '')
+        {!! $viteAssets !!}
+    @endif
 </head>
 
 <body>
