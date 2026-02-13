@@ -103,6 +103,7 @@ php minimo create:controller FooBarController
 php minimo create:controller TestController --md
 php minimo create:controller TestController --blade
 php minimo build
+php minimo preview
 php minimo dev
 php minimo dev 9000
 ```
@@ -114,9 +115,10 @@ Generated paths:
 - `create:controller` -> `app/Controllers/FooBarController.php`
 - `create:controller TestController --md` -> `app/Controllers/TestController.php` + `views/pages/test.blade.md`
 - `create:controller TestController --blade` -> `app/Controllers/TestController.php` + `views/pages/test.blade.php`
-- `build` -> rendered HTML files in `build/`
+- `build` -> rendered HTML files in `build/<route>/index.html` + copied assets from `public/`
+- `preview` -> runs build and serves `build/` on `127.0.0.1:9090` by default
 
-`dev` starts a local server on `127.0.0.1:8080` by default. Pass a port to override.
+`dev` starts local PHP + Vite servers with live refresh on `127.0.0.1:8080` by default. Pass a port to override.
 
 It also works seamlessly with Herd:
 

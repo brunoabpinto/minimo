@@ -11,6 +11,7 @@ Minimo is a lightweight PHP framework with:
 
 - PHP 8.3+
 - Composer
+- Node.js + npm
 
 ## Install
 
@@ -18,6 +19,7 @@ Minimo is a lightweight PHP framework with:
 git clone https://github.com/brunoabpinto/minimo.git
 cd minimo
 composer install
+npm install
 ```
 
 ## Run
@@ -27,6 +29,7 @@ php minimo dev
 ```
 
 Open `http://127.0.0.1:8080`.
+This runs PHP + Vite with live refresh on save.
 
 To use a custom port:
 
@@ -100,6 +103,7 @@ php minimo create:controller FooBarController
 php minimo create:controller TestController --md
 php minimo create:controller TestController --blade
 php minimo build
+php minimo preview
 php minimo dev
 php minimo dev 9000
 ```
@@ -111,7 +115,8 @@ Generated files:
 - `create:controller` -> `app/Controllers/FooBarController.php`
 - `create:controller TestController --md` -> also creates `views/pages/test.blade.md`
 - `create:controller TestController --blade` -> also creates `views/pages/test.blade.php`
-- `build` -> renders route views into `build/*.html`
+- `build` -> renders route views into `build/<route>/index.html` and copies `public/styles`, `public/images`, and `public/build`
+- `preview` -> runs `build` and serves `build/` on `127.0.0.1:9090` (or custom port)
 
 ## Controller Response Data
 

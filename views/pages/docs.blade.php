@@ -96,6 +96,7 @@ php minimo create:controller FooBarController
 php minimo create:controller TestController --md
 php minimo create:controller TestController --blade
 php minimo build
+php minimo preview
 php minimo dev
 php minimo dev 9000</code></pre>
         <p>Generated paths:</p>
@@ -105,9 +106,10 @@ php minimo dev 9000</code></pre>
             <li><code>create:controller</code> -> <code>app/Controllers/FooBarController.php</code></li>
             <li><code>create:controller TestController --md</code> -> <code>app/Controllers/TestController.php</code> + <code>views/pages/test.blade.md</code></li>
             <li><code>create:controller TestController --blade</code> -> <code>app/Controllers/TestController.php</code> + <code>views/pages/test.blade.php</code></li>
-            <li><code>build</code> -> rendered HTML files in <code>build/</code></li>
+            <li><code>build</code> -> rendered HTML files in <code>build/&lt;route&gt;/index.html</code> + copied assets from <code>public/</code></li>
+            <li><code>preview</code> -> runs build and serves <code>build/</code> on <code>127.0.0.1:9090</code> by default</li>
         </ul>
-        <p><code>dev</code> starts a local server on <code>127.0.0.1:8080</code> by default. Pass a port to override.</p>
+        <p><code>dev</code> starts local PHP + Vite servers with live refresh on <code>127.0.0.1:8080</code> by default. Pass a port to override.</p>
         <p>It also works seamlessly with Herd:</p>
         <pre><code>herd link myminimosite</code></pre>
         <p>Then open <code>https://myminimosite.test</code>.</p>
