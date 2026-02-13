@@ -96,6 +96,10 @@ Run from the project root:
 php minimo help
 php minimo create:page somepage
 php minimo create:post somepost
+php minimo create:controller FooBarController
+php minimo create:controller TestController --md
+php minimo create:controller TestController --blade
+php minimo build
 php minimo dev
 php minimo dev 9000
 ```
@@ -104,6 +108,10 @@ Generated files:
 
 - `create:page` -> `views/pages/somepage.blade.php`
 - `create:post` -> `views/pages/somepost.md`
+- `create:controller` -> `app/Controllers/FooBarController.php`
+- `create:controller TestController --md` -> also creates `views/pages/test.blade.md`
+- `create:controller TestController --blade` -> also creates `views/pages/test.blade.php`
+- `build` -> renders route views into `build/*.html`
 
 ## Controller Response Data
 

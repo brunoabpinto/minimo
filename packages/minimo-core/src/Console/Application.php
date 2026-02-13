@@ -5,6 +5,7 @@ namespace Minimo\Core\Console;
 use Minimo\Core\Console\Commands\CreatePageCommand;
 use Minimo\Core\Console\Commands\CreatePostCommand;
 use Minimo\Core\Console\Commands\CreateControllerCommand;
+use Minimo\Core\Console\Commands\BuildCommand;
 use Minimo\Core\Console\Commands\ServeCommand;
 
 final class Application
@@ -37,6 +38,10 @@ final class Application
             return (new ServeCommand($this->basePath))->handle(array_slice($argv, 2));
         }
 
+        if ($command === 'build') {
+            return (new BuildCommand($this->basePath))->handle(array_slice($argv, 2));
+        }
+
         fwrite(STDERR, "Unknown command: {$command}" . PHP_EOL . PHP_EOL);
         $this->printHelp();
 
@@ -57,6 +62,7 @@ Available commands:
   create:controller <name> [--md|--blade]
                         Create a controller (+ optional view)
   dev [port]           Start the local PHP dev server (default: 8080)
+  build                Render route views into static HTML in /build
 
 TXT;
     }

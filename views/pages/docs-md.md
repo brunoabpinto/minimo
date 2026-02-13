@@ -102,6 +102,7 @@ php minimo create:post somepost
 php minimo create:controller FooBarController
 php minimo create:controller TestController --md
 php minimo create:controller TestController --blade
+php minimo build
 php minimo dev
 php minimo dev 9000
 ```
@@ -113,6 +114,7 @@ Generated paths:
 - `create:controller` -> `app/Controllers/FooBarController.php`
 - `create:controller TestController --md` -> `app/Controllers/TestController.php` + `views/pages/test.blade.md`
 - `create:controller TestController --blade` -> `app/Controllers/TestController.php` + `views/pages/test.blade.php`
+- `build` -> rendered HTML files in `build/`
 
 `dev` starts a local server on `127.0.0.1:8080` by default. Pass a port to override.
 

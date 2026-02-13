@@ -23,6 +23,9 @@ php minimo create:controller TestController --blade</code></pre>
 # or choose a port
 php minimo dev 9000</code></pre>
         <p>Open <code>http://127.0.0.1:8080</code> in your browser (or your custom port).</p>
+        <p>To export static HTML files, run:</p>
+        <pre><code>php minimo build</code></pre>
+        <p>This renders route views to <code>build/</code>.</p>
         <p>Using Herd is seamless too:</p>
         <pre><code>herd link myminimosite</code></pre>
         <p>Then open <code>https://myminimosite.test</code>.</p>
