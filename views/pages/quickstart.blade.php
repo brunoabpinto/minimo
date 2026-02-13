@@ -13,13 +13,18 @@ cd minimo</code></pre>
         <pre><code>composer install</code></pre>
 
         <h2>3. Generate starter content with Minimo CLI</h2>
-        <pre><code>minimo create:page somepage
-minimo create:post somepost</code></pre>
+        <pre><code>php minimo create:page somepage
+php minimo create:post somepost</code></pre>
         <p>Creates <code>views/pages/somepage.blade.php</code> and <code>views/pages/somepost.md</code>.</p>
 
         <h2>4. Start the local server</h2>
-        <pre><code>php -S localhost:8000 -t public</code></pre>
-        <p>Open <code>http://localhost:8000</code> in your browser.</p>
+        <pre><code>php minimo dev
+# or choose a port
+php minimo dev 9000</code></pre>
+        <p>Open <code>http://127.0.0.1:8080</code> in your browser (or your custom port).</p>
+        <p>Using Herd is seamless too:</p>
+        <pre><code>herd link myminimosite</code></pre>
+        <p>Then open <code>https://myminimosite.test</code>.</p>
 
         <h2>5. Create a Hello page with a form</h2>
         <p>Create <code>views/pages/hello.blade.php</code>:</p>

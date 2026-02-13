@@ -89,14 +89,18 @@ A `.blade.md` file is compiled as Blade first, then parsed as Markdown.
 - `/docs-md` -> `views/pages/docs-md.md`
 - `/blog/hello-world` -> `views/pages/blog/hello-world.md`
 
+Markdown files are parsed with front matter support and rendered through `views/layouts/markdown.blade.php`.
+
 ## Minimo CLI
 
 Use the project CLI from the repository root:
 
 ```bash
-minimo help
-minimo create:page somepage
-minimo create:post somepost
+php minimo help
+php minimo create:page somepage
+php minimo create:post somepost
+php minimo dev
+php minimo dev 9000
 ```
 
 Generated paths:
@@ -104,4 +108,12 @@ Generated paths:
 - `create:page` -> `views/pages/somepage.blade.php`
 - `create:post` -> `views/pages/somepost.md`
 
-Markdown files are parsed with front matter support and rendered through `views/layouts/markdown.blade.php`.
+`dev` starts a local server on `127.0.0.1:8080` by default. Pass a port to override.
+
+It also works seamlessly with Herd:
+
+```bash
+herd link myminimosite
+```
+
+Then open `https://myminimosite.test`.

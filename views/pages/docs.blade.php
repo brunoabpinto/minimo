@@ -85,18 +85,23 @@ class PostController
             <li><code>/docs-md</code> -> <code>views/pages/docs-md.md</code></li>
             <li><code>/blog/hello-world</code> -> <code>views/pages/blog/hello-world.md</code></li>
         </ul>
+        <p>Markdown files are parsed with front matter support and rendered through <code>views/layouts/markdown.blade.php</code>.</p>
 
         <h2>Minimo CLI</h2>
         <p>Use the project CLI from the repository root:</p>
-        <pre><code>minimo help
-minimo create:page somepage
-minimo create:post somepost</code></pre>
+        <pre><code>php minimo help
+php minimo create:page somepage
+php minimo create:post somepost
+php minimo dev
+php minimo dev 9000</code></pre>
         <p>Generated paths:</p>
         <ul>
             <li><code>create:page</code> -> <code>views/pages/somepage.blade.php</code></li>
             <li><code>create:post</code> -> <code>views/pages/somepost.md</code></li>
         </ul>
-
-        <p>Markdown files are parsed with front matter support and rendered through <code>views/layouts/markdown.blade.php</code>.</p>
+        <p><code>dev</code> starts a local server on <code>127.0.0.1:8080</code> by default. Pass a port to override.</p>
+        <p>It also works seamlessly with Herd:</p>
+        <pre><code>herd link myminimosite</code></pre>
+        <p>Then open <code>https://myminimosite.test</code>.</p>
     </section>
 @endsection

@@ -23,10 +23,24 @@ composer install
 ## Run
 
 ```bash
-php -S localhost:8000 -t public
+php minimo dev
 ```
 
-Open `http://localhost:8000`.
+Open `http://127.0.0.1:8080`.
+
+To use a custom port:
+
+```bash
+php minimo dev 9000
+```
+
+Works seamlessly with Herd as well:
+
+```bash
+herd link myminimosite
+```
+
+Then open `https://myminimosite.test`.
 
 ## Request Flow
 
@@ -79,9 +93,11 @@ Markdown pages are wrapped by `views/layouts/markdown.blade.php`.
 Run from the project root:
 
 ```bash
-minimo help
-minimo create:page somepage
-minimo create:post somepost
+php minimo help
+php minimo create:page somepage
+php minimo create:post somepost
+php minimo dev
+php minimo dev 9000
 ```
 
 Generated files:
