@@ -5,7 +5,7 @@
             "type": "path",
             "url": "packages/minimo-core",
             "options": {
-                "symlink": true
+                "symlink": false
             }
         }
     ],

@@ -1,3 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../app/Core/core.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+(new Minimo\Core\Kernel())->run();

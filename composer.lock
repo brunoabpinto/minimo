@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df0a469cfbe3e74f78b972fec2bf1773",
+    "content-hash": "7cece3599208fae228d5cf6d18b5e9e8",
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -1109,7 +1109,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/minimo-core",
-                "reference": "b89fd3ba857301c358c2f4d58178f76b1241b775"
+                "reference": "3880052783564baae26df409608a78a427803532"
             },
             "require": {
                 "illuminate/events": "^12.0",
@@ -1128,7 +1128,7 @@
             ],
             "description": "Core runtime for the Minimo framework",
             "transport-options": {
-                "symlink": true,
+                "symlink": false,
                 "relative": true
             }
         },
@@ -2636,15 +2636,15 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.3.0"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.3.0"
 }
